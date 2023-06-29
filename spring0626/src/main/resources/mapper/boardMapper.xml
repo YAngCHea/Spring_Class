@@ -3,14 +3,19 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.java.mapper.BoardMapper">
 
+    <!-- 게시글 전체 개수 가져오기 -->
+    <select id="selectListCount" resultType="int">
+       select count(*) from board
+    </select>
+
     <!-- 게시글 전체 가져오기 -->
 	<select id = "selectAll" resultType="com.java.dto.BoardDto">
-	   select * from board order by bgroup desc, bstep asc 
-	   
-	   <!-- 
-	   select bno, id, btitle, bcontent, to_char(bdate, 'yyyy-MM-dd hh:mm:ss') as bdate,bhit, 
-	   bgroup,bstep,bindent, bfile from board
-	   -->
+	<![CDATA[
+	   select * from 
+	   (select rownum rnum, a.* from 
+	   ( select * from board order by bgroup desc, bstep asc) a
+	   )where rnum>=1 and rnum<=10
+	]]>
 	   
 	</select>
 
@@ -24,4 +29,39 @@
 	   insert into board values(board_seq.nextval,#{id},#{btitle},#{bcontent}, sysdate,0,board_seq.currval,0,0,#{bfile})
 	</insert>
 
+	<!-- 게시글 1개 삭제-->
+    <delete id="deleteOne">
+      delete board where bno=#{bno}
+    </delete>
+    
+    <!-- 게시글 1개 수정-->
+    <update id="updateOne">
+      update board set btitle=#{btitle}, bcontent=#{bcontent}, bfile=#{bfile} where bno=#{bno}
+    </update>
+    
+    <update id = "updateBstepCount">
+      update board set bstep = bstep+1 where bgroup=#{bgroup} and bstep>#{bstep}
+    </update>
+    
+    <insert id="insertReplyOne">
+      insert into board values(board_seq.nextval,#{id},#{btitle},#{bcontent},sysdate,0,#{bgroup},#{bstep}+1,#{bindent}+1,#{bfile})
+    </insert>
+    
+    
+    
+    
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

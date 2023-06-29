@@ -24,6 +24,7 @@
           <option value="content">내용</option>
         </select>
         <div class="title">
+          <input type="text" style="display : none">
           <input type="text" size="16">
         </div>
         <button type="submit"><i class="fas fa-search"></i></button>
@@ -50,7 +51,10 @@
       <tr>
         <td><span class="table-notice">${board.bno }</span></td>
         <td class="table-title">
-        <a href="boardView?bno=${board.bno }">${board.btitle}</a>
+        <c:forEach begin="1" end="${board.bindent}" step="1" >
+           <img src = "/images/icon_reply.png">
+        </c:forEach>
+	        <a href="boardView?bno=${board.bno }">${board.btitle}</a>
         </td>
         <td>${board.id }</td>
         <td>${board.bdate }</td>
@@ -72,7 +76,9 @@
     <ul class="page-num">
       <li class="first"></li>
       <li class="prev"></li>
-      <li class="num"><div>1</div></li>
+      <c:forEach begin="${startPage}" end="${endPage}" step="1" var="num">
+         <li class="num"><div>${num}</div></li>
+      </c:forEach>
       <li class="next"></li>
       <li class="last"></li>
     </ul>
