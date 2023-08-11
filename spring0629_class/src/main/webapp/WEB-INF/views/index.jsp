@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +21,18 @@
 <script type="text/javascript" src="/js/jquery.easing.1.3.js"></script>
 <script type="text/javascript" src="/js/idangerous.swiper-2.1.min.js"></script>
 <script type="text/javascript" src="/js/jquery.anchor.js"></script>
+<script>
+if("${loginCheck}" == "success"){
+	  alert("${sessionName}님 로그인되었습니다.");
+}
+
+  function logoutBtn(){
+	  alert("로그아웃이 되었습니다.");
+	  location.href="/member/logout";
+  }
+</script>
 <script type="text/javascript">
+
 $(document).ready(function() {
 	
 	var mySwiper = new Swiper('#mainRoll',{
@@ -110,8 +123,15 @@ $(document).ready(function() {
 			</div>
 			<div id="snb">
 				<ul>
-					<li><a href="#">LOGIN</a></li>
+				<c:if test="${sessionId==null }">
+					<li><a href="/member/login">LOGIN</a></li>
 					<li><a href="#">JOIN</a></li>
+				</c:if>
+				<c:if test="${sessionId!=null }">
+					<li><a href="#">${sessionName }님</a></li>
+					<li><a onclick="logoutBtn()" style="cursor:pointer;">LOGOUT</a></li>
+				</c:if>
+					
 					<li><a href="#">MY PAGE</a></li>
 					<li><a href="#">CART</a></li>
 				</ul>

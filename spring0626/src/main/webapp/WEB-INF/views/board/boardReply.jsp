@@ -49,13 +49,13 @@
         <tr>
           <th>내용</th>
           <td>
-<textarea name="bcontent" cols="50" rows="10">
-
-[답글]
-
----------------------------
-${bdto.bcontent }
-</textarea>
+			<textarea name="bcontent" cols="50" rows="10">
+			
+			[답글]
+			
+			---------------------------
+			${bdto.bcontent }
+			</textarea>
           </td>
         </tr>
         <tr>

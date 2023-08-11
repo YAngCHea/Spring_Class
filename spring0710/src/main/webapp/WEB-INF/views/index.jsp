@@ -167,8 +167,8 @@ $(document).ready(function() {
 			<div id="snb">
 				<ul>
 					<li><a href="/member/login">LOGIN</a></li>
-					<li><a href="/member/step02">JOIN</a></li>
-					<li><a href="#">MY PAGE</a></li>
+					<li><a href="/member/step01">JOIN</a></li>
+					<li><a href="/member/idsearch">MY PAGE</a></li>
 					<li><a href="#">CART</a></li>
 				</ul>
 

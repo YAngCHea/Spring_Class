@@ -22,4 +22,7 @@ public interface BoardMapper {
 	//하단 댓글 저장
 	void commentInsert(CommentDto comDto);      //insert라서 returntype없음
 
+	//하단댓글 1개 가져오기
+	CommentDto selectComOne(CommentDto comDto);
+
 }

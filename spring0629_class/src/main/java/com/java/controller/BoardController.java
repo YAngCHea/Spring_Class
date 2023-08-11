@@ -46,11 +46,12 @@ public class BoardController {
 	@RequestMapping("/board/commentInsert")
 	@ResponseBody  //2.data로 리턴해서 돌려줘라!
 	public CommentDto commentInsert(CommentDto comDto) {
-		CommentDto cdto =  boardService.commentInsert(comDto);
 		
-		
+		//하단댓글 저장 1개 가져오기
 		//페이지자체가 변경되는게 아니고 부분만 변경된다 -> 로딩시간이 줄어든다
 		System.out.println("ajax 넘어온 데이터1 : " +comDto.getCcontent());
+		
+		CommentDto cdto =  boardService.commentInsert(comDto);
 		
 		return cdto;  //1.데이터를 리턴해서 돌려줘야함
 	}

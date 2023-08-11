@@ -661,6 +661,14 @@
 .fileType{width:95%; height:20px; line-height:20px; background:#fff;}
 .fileType::-ms-value{border:1px #c0c0c0 solid;background:none;}
 
+/* BTN WIDTH CHANGE */
+.iw83{width:83px;}
+.iw86{width:86px;}
+.iwc80{width:80px; margin:0 auto; font-size:12px;}
+.iw70{width:70px;}
+.iw56{width:56px;}
+.iw40{width:40px;}
+.iw0140{width:140px; height:50px; line-height:50px; font-size:16px;} /* 결제 */
 /* TEXTAREA TYPE */
 .tta{width:95%; height:88px; font-size:12px; border:1px #d9d9d9 solid; font-family:'Nanum Gothic';}
 .demandtta{width:97%; height:88px; font-size:12px; border:1px #d9d9d9 solid; font-family:'Nanum Gothic';}

@@ -11,10 +11,13 @@
 <meta name="description" content="JARDIN SHOP" />
 <meta name="keywords" content="JARDIN SHOP" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scaleable=no" />
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/reset.css?v=Y" />
 <link rel="stylesheet" type="text/css" href="../css/layout.css?v=Y" />
 <link rel="stylesheet" type="text/css" href="../css/content.css?v=Y" />
 <script type="text/javascript" src="../js/jquery.min.js"></script>
+<!-- 날짜 포맷함수 -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script type="text/javascript" src="../js/top_navi.js"></script>
 <script type="text/javascript" src="../js/left_navi.js"></script>
 <script type="text/javascript" src="../js/main.js"></script>
@@ -22,7 +25,6 @@
 <script type="text/javascript" src="../js/jquery.easing.1.3.js"></script>
 <script type="text/javascript" src="../js/idangerous.swiper-2.1.min.js"></script>
 <script type="text/javascript" src="../js/jquery.anchor.js"></script>
-<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 </head>
 <body>
@@ -45,8 +47,14 @@
 			</div>
 			<div id="snb">
 				<ul>
-					<li><a href="#">LOGIN</a></li>
-					<li><a href="#">JOIN</a></li>
+					<c:if test="${sessionId==null }">
+						<li><a href="/member/login">LOGIN</a></li>
+						<li><a href="#">JOIN</a></li>
+					</c:if>
+					<c:if test="${sessionId!=null }">
+						<li><a href="#">${sessionName }님</a></li>
+						<li><a onclick="logoutBtn()" style="cursor:pointer;">LOGOUT</a></li>
+					</c:if>
 					<li><a href="#">MY PAGE</a></li>
 					<li><a href="#">CART</a></li>
 				</ul>
@@ -208,19 +216,35 @@
 
 						<script>
 							function commentBtn() {
-								alert($(".replyType").val());
-								alert($(".replynum").val());
+								if("${sessionId}"==""){
+									alert("로그인을 하셔야 댓글 입력이 가능합니다.");
+									location.href="/member/login";
+									return false;
+								}
 								
+								if($(".replyType").val().length<3){
+									alert("2글자 이상 입력하셔야 등록가능합니다.");
+									return false;
+								}
+								alert("댓글 저장합니다.");
 								//ajax구문
 								$.ajax({
 									url : "/board/commentInsert",
 									type:"post",
-									data:{"id":"aaa",  //${sessionId}를 사용할 것!!로그인 만든다음에 넣어야함
+									data:{"id":"${sessionId}",  //${sessionId}를 사용할 것!!로그인 만든다음에 넣어야함
 										  "bno":"${bdto.bno}",
 										  "ccontent" :$(".replyType").val(),
 										  "cpw" :$(".replynum").val()},
 									success:function(data){
-										alert("성공");
+										var dataHtml="";
+										alert("댓글 저장 성공");
+										//하단댓글 1개 가져오기
+										consol.log(data);
+										
+										//글자삭제
+										$(".replyType").val("");
+										$(".replynum").val("");
+										
 									},
 									error:function(){
 										alert("실패");
@@ -249,7 +273,7 @@
 					<div class="replyBox">
 					
 					  <c:forEach var="comDto" items="${comList }">
-						<ul>
+						<ul id = "${comDto.cno}">
 							<li class="name">${comDto.id } <span>[${comDto.cdate }]</span></li>
 							<li class="txt">${comDto.ccontent}</li>
 							<li class="btn">
